@@ -1,15 +1,26 @@
+* {
+  font-family: "幼圆", serif;
+  font-weight: bold;
+}
+
 .accountName {
   width: 13vw;
   text-align: center;
   font-family: "幼圆", serif;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  min-height: 90vh;
+.el-menu-vertical-demo {
+  &:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 90vh;
+  }
+
+  & .el-menu-item-group__title {
+    padding: 0;
+  }
 }
 
 .show {

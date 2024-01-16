@@ -1,0 +1,74 @@
+@outsideWidth: 80vw;
+
+.outside {
+  width: @outsideWidth;
+}
+
+.balance {
+  width: 40vw;
+  height: 30vh;
+  border-radius: 30px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.24);
+  background-color: rgba(63, 157, 253, 0.16);
+
+  & p {
+    font-size: 5vh;
+    margin-left: 5vw;
+    text-align: center;
+    position: relative;
+    top: 10vh;
+    right: 30px;
+    font-family: Microsoft JhengHei, serif;
+  }
+}
+
+.toolbar {
+  position: relative;
+  top: -31vh;
+  right: 2vw;
+  float: right;
+
+  & .public {
+    width: calc(@outsideWidth - 100px - 40vw);
+    height: 12vh;
+    border-radius: 30px;
+    text-align: center;
+    background-color: rgba(63, 157, 253, 0.16);
+    box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.24);
+    margin-bottom: 5vh;
+
+    & p {
+      position: relative;
+      top: 1vh;
+    }
+  }
+
+  & .actionBar {
+    width: calc(@outsideWidth - 100px - 40vw);
+    height: 12vh;
+    border-radius: 30px;
+    text-align: center;
+    background-color: rgba(63, 157, 253, 0.16);
+    box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.24);
+    display: flex;
+
+    & .el-row {
+      position: relative;
+      top: 20px;
+      flex: auto;
+      display: inline-block;
+
+      & .el-button {
+        margin-left: 2vw;
+        margin-right: 2vw;
+      }
+    }
+  }
+}
+
+.dataDisplay {
+  & .el-table {
+    position: relative;
+    top: -25vh;
+  }
+}
