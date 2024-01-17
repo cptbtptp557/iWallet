@@ -27,7 +27,7 @@
         <el-table-column prop="tradingResults" label="交易结果" width="200"/>
         <el-table-column prop="amountTransaction" label="交易金额" width="300"/>
         <el-table-column prop="tradingHours" label="交易时间"/>
-        <el-table-column label="更多数据">
+        <el-table-column label="更多数据" width="150">
           <el-button>更多数据
             <el-icon>
               <Right/>

@@ -1,5 +1,5 @@
 <template>
-  <p class="accountName">accountName1</p>
+  <p class="accountName">accountName1公钥</p>
   <el-menu class="el-menu-vertical-demo">
     <el-sub-menu index="1">
       <template #title>
@@ -41,7 +41,7 @@ import {
   Setting,
 } from '@element-plus/icons-vue';
 
-const showcasePage = shallowRef(home);
+const showcasePage = shallowRef(setUp);
 </script>
 
 <style>
