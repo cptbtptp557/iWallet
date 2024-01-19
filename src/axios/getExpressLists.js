@@ -5,8 +5,11 @@ import Web3 from "web3";
 export const getAccountLists = defineStore('accountLists', {
     state: () => ({
         thisTransactionHistory: [], //历史交易数据
+        thisMnemonic: [], //助记词
+        thisAccountLists: [] //新创建账户数据
     }),
     actions: {
+        // 获取账户历史交易记录
         async getTransactionHistory(thisPublicKey) {
             try {
                 const list = await axios.get('http://localhost:3000/transactions', {
@@ -14,7 +17,6 @@ export const getAccountLists = defineStore('accountLists', {
                         'thisPublicKey': thisPublicKey,
                     }
                 });
-
                 let cookie = document.cookie.split(';').find(item => item.trim().startsWith('publicKey=')).split('=')[1];
                 for (let i = 0; i < list.data.lists.result.length; i++) {
                     list.data.lists.result[i].value = Web3.utils.fromWei(list.data.lists.result[i].value, "ether");
@@ -25,7 +27,33 @@ export const getAccountLists = defineStore('accountLists', {
                     }
                 }
                 this.thisTransactionHistory = list.data.lists.result;
-                console.log(this.thisTransactionHistory)
+            } catch (err) {
+                console.error(err);
+            }
+        },
+
+        // 获取助记词
+        async generateMnemonic() {
+            try {
+                await axios.get('http://localhost:3000/generateMnemonic')
+                    .then(res => {
+                        this.thisMnemonic = res.data.mnemonic.split(' ');
+                    })
+            } catch (err) {
+                console.error(err);
+            }
+        },
+
+        async getGenerateAccountLists(password) {
+            try {
+                await axios.get('http://localhost:3000/generateAccountLists', {
+                    params: {
+                        'password': password,
+                    }
+                })
+                    .then(res => {
+                        this.thisAccountLists = res.data;
+                    })
             } catch (err) {
                 console.error(err);
             }

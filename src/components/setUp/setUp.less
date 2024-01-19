@@ -9,14 +9,17 @@
 }
 
 .mnemonic {
-  & .displaySeedPhrase {
+  & table {
     width: 40vw;
     height: 30vh;
     border: 2px solid rgba(0, 0, 0, 0.09);
     border-radius: 20px;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.09);
-    position: relative;
-    left: 10vw;
+    position: absolute;
+    top: 15vh;
+    left: 0;
+    right: 0;
+    margin: auto;
 
     & tr {
       & td {
@@ -28,16 +31,17 @@
   & h1 {
     text-align: center;
     position: relative;
-    top: 3vh;
-    right: 2vw;
+    top: 40vh;
   }
 
   & input[type = button] {
     width: 100px;
     height: 30px;
-    position: relative;
-    top: 5vh;
-    left: 27vw;
+    position: absolute;
+    top: 63vh;
+    left: 0;
+    right: 0;
+    margin: auto;
     border-color: rgba(0, 0, 0, 0.09);
     border-radius: 10px;
 
@@ -58,13 +62,32 @@
       font-weight: 500;
     }
   }
+  & .formatWarnings {
+    color: #ff0000;
+    position: relative;
+    top: 30vh;
+  }
+
+  & label {
+    width: 10vw;
+    position: absolute;
+    top: 30vh;
+    left: 0;
+    right: 0;
+    margin: auto;;
+  }
+
   & input[type = button] {
     width: 100px;
     height: 30px;
-    position: relative;
-    top: 20vh;
+    position: absolute;
+    top: 50vh;
+    left: 0;
+    right: 0;
+    margin: auto;
     border-color: rgba(0, 0, 0, 0.09);
     border-radius: 10px;
+
     &:active {
       background-color: rgba(0, 0, 0, 0.1);
     }
