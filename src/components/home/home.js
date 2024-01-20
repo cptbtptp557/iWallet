@@ -4,13 +4,20 @@ import {ElNotification} from "element-plus";
 import {getAccountLists} from "../../axios/getExpressLists.js"
 
 export const home = () => {
+    let iji = ref('0x50ed20287ceb13a5d1ec4406df825721a1dbf535ff31f0e7c88ce11466fc11f4');
     const isCollapse = ref(false);
     const publicKey = ref(document.cookie.split(';').find(item => item.trim().startsWith('publicKey=')).split('=')[1]); //公钥
     const balance = ref(); //余额
+    const thisPublicKeyFormer = ref(publicKey.value.slice(0, 7));
+    const thisPublicKeyAfter = ref(publicKey.value.slice(publicKey.value.length - 4));
     const transactionHistory = ref([]); //历史交易记录
     const amountTransaction = ref(); //交易金额
     const moreLists = ref(false); //更多数据栏状态
     const key = ref(null); //点击行的数据
+    const transferMenu = ref(false);
+    const amountTransferred = ref(); //转账金额
+    const toPublicKey = ref(); //收款方公钥
+    const tradeHash = ref(); //查询当前交易地址
 
     const web3 = new Web3(Web3.givenProvider || "https://goerli.infura.io/v3/7a79903a40a64814a9cd0b9b899e5434");
     // 获取余额
@@ -50,11 +57,40 @@ export const home = () => {
     // 获取点击行数据
     const getThisKey = (now) => {
         key.value = now;
-        console.log(key.value)
+        tradeHash.value = 'https://goerli.etherscan.io/tx/' + key.value.hash;
     }
 
-    const thisPublicKeyFormer = ref(publicKey.value.slice(0, 7));
-    const thisPublicKeyAfter = ref(publicKey.value.slice(publicKey.value.length - 4));
+    // 提交转账
+    const submitTransfer = async () => {
+        transferMenu.value = false;
+        const nonce = await web3.eth.getTransactionCount(toPublicKey.value);
+        const gasPrice = await web3.eth.getGasPrice();
+        const value = web3.utils.toWei(amountTransferred.value, "ether");
+        try {
+            let rawTx = {
+                gasPrice,
+                data: "0x0000",
+                from: web3.eth.accounts.privateKeyToAccount(iji.value).address,
+                to: toPublicKey.value,
+                value: value,
+                nonce,
+            };
+            console.log(nonce)
+
+            const signedTx = await web3.eth.accounts.signTransaction(rawTx, iji.value);
+            web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+                .then((receipt) => {
+                    console.log('交易Hash:', receipt.transactionHash);
+                    console.log(`https://goerli.etherscan.io/tx/${receipt.transactionHash}`);
+                    location.reload();
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     return {
         isCollapse,
@@ -68,6 +104,11 @@ export const home = () => {
         amountTransaction,
         moreLists,
         key,
-        getThisKey
+        getThisKey,
+        transferMenu,
+        amountTransferred,
+        toPublicKey,
+        submitTransfer,
+        tradeHash
     }
 }

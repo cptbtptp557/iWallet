@@ -1,6 +1,6 @@
 <template>
-  <div v-if="password">
-    <p class="accountName">accountName1公钥</p>
+  <div v-if="publicKey">
+    <p class="accountName">{{ publicKey.slice(0, 6) }} *** {{ publicKey.slice(publicKey.length - 4) }}</p>
     <el-menu class="el-menu-vertical-demo">
       <el-sub-menu index="1">
         <template #title>
@@ -46,7 +46,7 @@ import {
 } from '@element-plus/icons-vue';
 
 const showcasePage = shallowRef(home);
-const password = ref(document.cookie.split(";")[0].split("=")[1]);
+const publicKey = ref(document.cookie.split(';').find(item => item.trim().startsWith('publicKey=')).split('=')[1]);
 </script>
 
 <style>

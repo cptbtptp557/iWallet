@@ -44,9 +44,10 @@
     }
 
     & .el-button {
-      position: relative;
-      top: -1vh;
+      position: absolute;
+      top: 25%;
       right: 5vw;
+      transform: translateY(-50%);
       float: right;
     }
   }
@@ -62,7 +63,7 @@
 
     & .el-row {
       position: relative;
-      top: 20px;
+      top: 3.5vh;
       flex: auto;
       display: inline-block;
 
@@ -112,5 +113,14 @@
         }
       }
     }
+  }
+
+  & a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 2vh;
+    text-decoration: none;
   }
 }

@@ -18,12 +18,27 @@
       <div class="actionBar">
         <el-row>
           <el-tooltip content="转账">
-            <el-button size="large" circle style="transform: rotate(90deg)">
+            <el-button size="large" circle style="transform: rotate(90deg)" @click="transferMenu = true">
               <el-icon>
                 <Sort/>
               </el-icon>
             </el-button>
           </el-tooltip>
+          <el-dialog v-model="transferMenu" title="Shipping address">
+            <label>
+              金额:
+              <input type="text" placeholder="请输入金额" v-model="amountTransferred">
+            </label>
+            <label>
+              收款方:
+              <input type="text" placeholder="请输入收款方公钥" v-model="toPublicKey">
+            </label>
+            <template #footer>
+              <span class="dialog-footer">
+                <el-button @click="submitTransfer">提交</el-button>
+              </span>
+            </template>
+          </el-dialog>
           <el-tooltip content="刷新">
             <el-button size="large" circle style="transform: rotate(90deg)" @click="refreshPage">
               <el-icon>
@@ -43,7 +58,7 @@
     </div>
     <el-divider/>
     <div class="dataDisplay">
-      <el-table :data="transactionHistory" max-height="350" :current-row-key="key">
+      <el-table :data="transactionHistory" max-height="380" border :current-row-key="key">
         <el-table-column prop="tradingResults" label="交易结果" width="200"/>
         <el-table-column prop="value" label="交易金额" width="300">
           <template #default="{row}">
@@ -54,9 +69,7 @@
         <el-table-column prop="block_timestamp" label="交易时间">
           <template #default="{row}">
             <span>
-              {{
-                row.block_timestamp.slice(0, -5).substring(0, 10) + "  " + row.block_timestamp.slice(0, -5).substring(11)
-              }}
+              {{ new Date(row.block_timestamp) }}
             </span>
           </template>
         </el-table-column>
@@ -93,9 +106,11 @@
             <td>燃料价格:{{ Web3.utils.fromWei(key.gas_price, "gwei") }}</td>
           </tr>
         </table>
+        <a :href="tradeHash" >前往交易地址</a>
       </el-dialog>
     </div>
   </div>
+
 </template>
 
 <script setup>
@@ -114,7 +129,12 @@ const {
   amountTransaction,
   moreLists,
   key,
-  getThisKey
+  getThisKey,
+  transferMenu,
+  amountTransferred,
+  toPublicKey,
+  submitTransfer,
+  tradeHash
 } = home();
 </script>
 
