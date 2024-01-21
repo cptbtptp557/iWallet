@@ -6,7 +6,8 @@ export const getAccountLists = defineStore('accountLists', {
     state: () => ({
         thisTransactionHistory: [], //历史交易数据
         thisMnemonic: [], //助记词
-        thisAccountLists: [] //新创建账户数据
+        thisAccountLists: [], //新创建账户数据
+        thisPublicKey: '', //当前账户的私钥
     }),
     actions: {
         // 获取账户历史交易记录
@@ -37,7 +38,7 @@ export const getAccountLists = defineStore('accountLists', {
             try {
                 await axios.get('http://localhost:3000/generateMnemonic')
                     .then(res => {
-                        this.thisMnemonic = res.data.mnemonic.split(' ');
+                        this.thisMnemonic = res.data.thisMnemonic.split(' ');
                     })
             } catch (err) {
                 console.error(err);
@@ -53,6 +54,22 @@ export const getAccountLists = defineStore('accountLists', {
                 })
                     .then(res => {
                         this.thisAccountLists = res.data;
+                    })
+            } catch (err) {
+                console.error(err);
+            }
+        },
+
+        async showPrivateKey(PublicKey) {
+            try {
+                await axios.get('http://localhost:3000/showPriKey', {
+                    params: {
+                        'thisPublicKey': PublicKey
+                    }
+                })
+                    .then((data) => {
+                        this.thisPublicKey = data.data.privateKey;
+                        console.log(data)
                     })
             } catch (err) {
                 console.error(err);

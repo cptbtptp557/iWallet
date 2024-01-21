@@ -23,7 +23,7 @@ export const home = () => {
     // 获取余额
     web3.eth.getBalance(publicKey.value)
         .then((res) => {
-            balance.value = parseFloat(Web3.utils.fromWei(res, "ether")).toFixed(2);
+            balance.value = parseFloat(Web3.utils.fromWei(res, "ether")).toFixed(4);
         })
         .catch((err) => {
             console.error(err);

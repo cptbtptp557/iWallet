@@ -24,7 +24,7 @@
               </el-icon>
             </el-button>
           </el-tooltip>
-          <el-dialog v-model="transferMenu" title="Shipping address">
+          <el-dialog v-model="transferMenu" title="转账">
             <label>
               金额:
               <input type="text" placeholder="请输入金额" v-model="amountTransferred">

@@ -17,13 +17,19 @@ export const setUp = () => {
 // 关闭右侧抽屉
     const cancelClick = () => {
         createAccountBool.value = false;
+        location.reload();
     }
 
 // 开始计时器，延迟五秒执行打印操作
     const startTimer = () => {
-        time.value = setTimeout(() => {
-            ElMessageBox.alert(
-                '<h2 style="text-align: center">' + showPriKey.value + '</h2>',
+        time.value = setTimeout(async () => {
+            await getAccountLists().showPrivateKey(document.cookie.split(';').find(item => item.trim().startsWith('publicKey=')).split('=')[1])
+                .then(() => {
+                    showPriKey.value = getAccountLists().thisPublicKey;
+                    console.log(showPriKey.value)
+                });
+            await ElMessageBox.alert(
+                '<p style="text-align: center; width: 400px; word-wrap: break-word">' + showPriKey.value + '</p>',
                 '私钥',
                 {
                     dangerouslyUseHTMLString: true,
@@ -77,7 +83,6 @@ export const setUp = () => {
             formatWarningsState.value = 'none';
         }
     })
-
 
 
     return {

@@ -46,7 +46,7 @@ import {
 } from '@element-plus/icons-vue';
 
 const showcasePage = shallowRef(home);
-const publicKey = ref(document.cookie.split(';').find(item => item.trim().startsWith('publicKey=')).split('=')[1]);
+const publicKey = ref(document.cookie.split('=')[1]);
 </script>
 
 <style>
