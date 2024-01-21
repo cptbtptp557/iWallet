@@ -93,7 +93,10 @@ app.get('/generateAccountLists', (req, res) => {
                         const getPublicKey = wallet.getChecksumAddressString();
                         // 获取私钥
                         const getPrivateKey = "0x" + wallet.getPrivateKey().toString('hex');
-                        const addLists = {getPublicKey, getPrivateKey};
+                        const PrivateKeyToken = jwt.sign({
+                            getPrivateKey: getPrivateKey,
+                        }, 'cptbtptp2557');
+                        const addLists = {getPublicKey, PrivateKeyToken};
                         fs.appendFileSync('addressLists.txt', JSON.stringify(addLists), 'utf8');
                         res.json({getPrivateKey, getPublicKey});
                     } else {
@@ -108,7 +111,10 @@ app.get('/generateAccountLists', (req, res) => {
                             const getPublicKey = wallet.getChecksumAddressString();
                             // 获取私钥
                             const getPrivateKey = "0x" + wallet.getPrivateKey().toString('hex');
-                            const addLists = {getPublicKey, getPrivateKey};
+                            const PrivateKeyToken = jwt.sign({
+                                getPrivateKey: getPrivateKey,
+                            }, 'cptbtptp2557');
+                            const addLists = {getPublicKey, PrivateKeyToken};
                             fs.appendFileSync('addressLists.txt', JSON.stringify(addLists), 'utf8');
                             res.json({getPrivateKey, getPublicKey});
                         });
@@ -135,7 +141,7 @@ app.get('/showPriKey', (req, res) => {
 
             if (foundObject) {
                 const parsedFoundObject = JSON.parse(foundObject);
-                privateKey = parsedFoundObject.getPrivateKey;
+                privateKey = jwt.decode(parsedFoundObject.PrivateKeyToken).getPrivateKey;
             } else {
                 console.log("未找到具有指定 getPublicKey 的对象。");
             }
