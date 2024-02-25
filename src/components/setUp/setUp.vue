@@ -28,7 +28,7 @@
         </div>
 
         <div v-else>
-          <h2>aa公钥:<span>{{ publicKey }}</span></h2>
+          <h2>公钥:<span>{{ publicKey }}</span></h2>
           <h2>私钥:<span>{{ privateKey }}</span></h2>
           <input type="button" value="完成" @click="cancelClick">
         </div>
