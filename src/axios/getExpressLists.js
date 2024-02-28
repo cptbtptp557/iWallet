@@ -21,10 +21,14 @@ export const getAccountLists = defineStore('accountLists', {
                 let cookie = document.cookie.split(';').find(item => item.trim().startsWith('publicKey=')).split('=')[1];
                 for (let i = 0; i < list.data.lists.result.length; i++) {
                     list.data.lists.result[i].value = Web3.utils.fromWei(list.data.lists.result[i].value, "ether");
-                    if (list.data.lists.result[i].from_address === cookie.toLowerCase()) {
-                        list.data.lists.result[i].tradingResults = '收款';
+                    if (list.data.lists.result[i].input !== "0x" && list.data.lists.result[i].input !== "0x0000") {
+                        list.data.lists.result[i].tradingResults = '合约部署';
                     } else {
-                        list.data.lists.result[i].tradingResults = '付款';
+                        if (list.data.lists.result[i].from_address === cookie.toLowerCase()) {
+                            list.data.lists.result[i].tradingResults = '收款';
+                        } else {
+                            list.data.lists.result[i].tradingResults = '付款';
+                        }
                     }
                 }
                 this.thisTransactionHistory = list.data.lists.result;
